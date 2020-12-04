@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Upload Traffic Signs🚦</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <label for="imageUpload" class="upload-label">Upload...</label>
+    <input type="file" name="traffic_sign_image_to_search" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="form.submit();">
+  </fieldset>
+</form>
+
+{% if img %}
+<div style="display:block;">
+{% else %}
+<div style="display:none;">
+{% endif %}
+  <div class="img-preview">
+    <img src="data:{{ mime_type }};base64,{{ img }}">
+  </div>
+  <div>
+    <button type="button" class="btn btn-primary btn-lg" id="predictButton" onclick="hide_button_show_loader();">Predict Traffic🚦 Signs</button>
+  </div>
+
+  <div class="loader" id="loader"></div>
+
+  <p class="result" id="result">{{ predict_result }}</p>
+
+</div>
+
+{% endblock %}
